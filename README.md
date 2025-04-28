@@ -2,6 +2,14 @@
 
 这是一个基于Next.js的金融计算工具集，包含多种实用的金融计算功能。
 
+## 项目截图
+
+![储蓄复利计算器截图](/public/window.svg)
+*图1: 储蓄复利计算器界面*
+
+![收益对比图表](/public/file.svg)
+*图2: 名义收益与实际收益对比图表*
+
 ## 主要功能
 
 ### 储蓄复利计算器
@@ -46,32 +54,19 @@ npm run dev
 4. 访问应用
    开发服务器启动后，在浏览器中打开 http://localhost:3000 即可访问应用
 
-### Cloudflare部署
-1. 安装Wrangler CLI工具
+### Cloudflare一键部署
+
+[![部署到Cloudflare](https://img.shields.io/badge/部署到-Cloudflare-blue?style=for-the-badge&logo=cloudflare)](https://dash.cloudflare.com/?to=/:account/workers-and-pages/new)
+
+1. 点击上方按钮跳转到Cloudflare控制台
+2. 选择"创建Worker"
+3. 连接您的GitHub账户并选择此仓库
+4. 系统将自动完成部署
+
+或使用命令行快速部署:
 ```bash
-npm install -g wrangler
+npm install -g wrangler && wrangler login && npm run build && wrangler deploy
 ```
-
-2. 登录Cloudflare账户
-```bash
-wrangler login
-```
-
-3. 配置环境变量
-   在项目根目录创建`.env`文件，添加必要的环境变量
-
-4. 构建项目
-```bash
-npm run build
-```
-
-5. 部署到Cloudflare
-```bash
-wrangler deploy
-```
-
-6. 自定义域名(可选)
-   在Cloudflare控制面板中为您的Worker配置自定义域名
 
 ### 其他部署方式
 您也可以使用Vercel平台一键部署Next.js应用:
