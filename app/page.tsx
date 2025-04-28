@@ -1,103 +1,115 @@
-import Image from "next/image";
-
-export default function Home() {
+// pages/index.tsx
+import Link from 'next/link'; // 使用 Next.js 原生的 Link 组件
+import { FC } from 'react';
+const HomePage: FC = () => {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <div className="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
+      <h1 className="text-4xl font-extrabold text-center mb-12 text-blue-600">
+        金融计算器工具集合
+      </h1>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        {/* 现值计算器卡片 */}
+        <Link
+          href="/xz"
+          className="flex flex-col justify-between bg-white rounded-lg shadow-md hover:shadow-lg transition duration-200 p-6 h-full"
         >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+          <div>
+            <h2 className="text-2xl font-bold mb-4 text-blue-500">现值计算器</h2>
+            <p className="text-gray-600 mb-6">
+              计算资金当前价值，支持复利现值计算
+            </p>
+          </div>
+          <div className="flex items-center space-x-2">
+            <span className="text-gray-400 text-sm">公式：PV = FV/(1+r)^n</span>
+            <svg
+              className="w-5 h-5 text-gray-400"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </div>
+        </Link>
+
+        {/* 终值计算器卡片 */}
+        <Link
+          href="/zz"
+          className="flex flex-col justify-between bg-white rounded-lg shadow-md hover:shadow-lg transition duration-200 p-6 h-full"
         >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+          <div>
+            <h2 className="text-2xl font-bold mb-4 text-blue-500">终值计算器</h2>
+            <p className="text-gray-600 mb-6">
+              预测资金未来价值，支持复利终值计算
+            </p>
+          </div>
+          <div className="flex items-center space-x-2">
+            <span className="text-gray-400 text-sm">公式：FV = PV×(1+r)^n</span>
+            <svg
+              className="w-5 h-5 text-gray-400"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </div>
+        </Link>
+
+        {/* 复利计算器卡片 */}
+        <Link
+          href="/fl"
+          className="flex flex-col justify-between bg-white rounded-lg shadow-md hover:shadow-lg transition duration-200 p-6 h-full"
         >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+          <div>
+            <h2 className="text-2xl font-bold mb-4 text-blue-500">复利计算器</h2>
+            <p className="text-gray-600 mb-6">
+              计算复利增长效果，支持不同复利次数
+            </p>
+          </div>
+          <div className="flex items-center space-x-2">
+            <span className="text-gray-400 text-sm">公式：A = P(1+r/n)^nt</span>
+            <svg
+              className="w-5 h-5 text-gray-400"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </div>
+        </Link>
+        {/* 新增：储蓄复利计算器卡片 */}
+        <Link
+          href="/cxfl"
+          className="flex flex-col justify-between bg-white rounded-lg shadow-md hover:shadow-lg transition duration-200 p-6 h-full"
+        >
+          <div>
+            <h2 className="text-2xl font-bold mb-4 text-blue-500">储蓄复利计算器</h2>
+            <p className="text-gray-600 mb-6">
+              计算定期定额投资的复利增长效果，对比无复利情况
+            </p>
+          </div>
+          <div className="flex items-center space-x-2">
+            <span className="text-gray-400 text-sm">公式：FV = P(1+r)^n + 定投*( (1+r)^n -1 )/r</span>
+            <svg
+              className="w-5 h-5 text-gray-400"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </div>
+        </Link>
+      </div>
     </div>
   );
-}
+};
+
+export default HomePage;

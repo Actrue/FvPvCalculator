@@ -1,36 +1,81 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 金融计算工具
 
-## Getting Started
+这是一个基于Next.js的金融计算工具集，包含多种实用的金融计算功能。
 
-First, run the development server:
+## 主要功能
 
+### 储蓄复利计算器
+
+1. **功能说明**
+   - 计算在给定初始本金、每月定投金额和年增长率下，达到目标金额所需的年数
+   - 同时计算无复利情况下的总投入金额
+   - 显示复利收益放大比率
+   - 提供名义收益和实际收益(扣除通胀)的图表展示
+
+2. **计算方法**
+   - 复利计算采用按月复利方式
+   - 计算公式：`最终金额 = 初始本金 × (1 + 月利率)^(年数×12) + 每月定投 × [(1 + 月利率)^(年数×12) - 1] / 月利率`
+   - 实际收益计算会扣除通货膨胀影响
+
+3. **使用说明**
+   - 输入每月定投金额、年增长率、通胀率、初始本金和目标金额
+   - 点击"计算所需年数"按钮获取结果
+   - 可调整"显示年份"查看不同时间段的收益变化
+
+## 部署指南
+
+### 本地部署（开发环境）
+1. 环境准备
+   - 安装Node.js (建议版本18.x或更高)
+   - 安装npm或yarn
+
+2. 安装项目依赖
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+# 或使用yarn
+# yarn install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+3. 启动开发服务器
+```bash
+npm run dev
+# 或使用yarn
+# yarn dev
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+4. 访问应用
+   开发服务器启动后，在浏览器中打开 http://localhost:3000 即可访问应用
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Cloudflare部署
+1. 安装Wrangler CLI工具
+```bash
+npm install -g wrangler
+```
 
-## Learn More
+2. 登录Cloudflare账户
+```bash
+wrangler login
+```
 
-To learn more about Next.js, take a look at the following resources:
+3. 配置环境变量
+   在项目根目录创建`.env`文件，添加必要的环境变量
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+4. 构建项目
+```bash
+npm run build
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+5. 部署到Cloudflare
+```bash
+wrangler deploy
+```
 
-## Deploy on Vercel
+6. 自定义域名(可选)
+   在Cloudflare控制面板中为您的Worker配置自定义域名
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 其他部署方式
+您也可以使用Vercel平台一键部署Next.js应用:
+[Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+更多部署选项请参考:
+[Next.js部署文档](https://nextjs.org/docs/app/building-your-application/deploying)
