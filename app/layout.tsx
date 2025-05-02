@@ -4,6 +4,7 @@ import "./globals.css"; // 全局样式已移至 CSS 文件
 import Link from "next/link";
 import type { Metadata } from "next";
 
+
 // 字体配置
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,7 +28,7 @@ export const metadata: Metadata = {
     title: "金融计算器工具",
     description: "专业的复利、现值、终值计算工具",
     images: "https://your-site.com/og-image.png",
-    url: "https://your-site.com",
+    url: "https://jrjsq.sereniblue.com",
     siteName: "金融计算器",
   },
 };
@@ -39,6 +40,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="zh-CN" className="scroll-smooth">
+      <head>
+        <link rel="icon" href="/icons8-a-96.png" type="image/png" />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} 
           antialiased bg-gray-50 min-h-screen 
@@ -51,7 +55,7 @@ export default function RootLayout({
               <a href="/" className="text-2xl font-bold text-blue-600">
                 金融计算器
               </a>
-              <div className="hidden md:flex space-x-6">
+              <div className="hidden md:flex space-x-6 items-center">
                 <Link
                   href="/xz"
                   className="text-gray-600 hover:text-blue-500 transition"
@@ -76,6 +80,19 @@ export default function RootLayout({
                 >
                   储蓄复利
                 </Link>
+                <Link
+                  href="/time"
+                  className="text-gray-600 hover:text-blue-500 transition"
+                >
+                  周数进度
+                </Link>
+                <Link
+                  href="/ll"
+                  className="text-gray-600 hover:text-blue-500 transition"
+                >
+                  利率计算
+                </Link>
+                
               </div>
               {/* 移动端菜单按钮 */}
               <button className="md:hidden text-gray-600">
