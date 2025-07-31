@@ -1,4 +1,4 @@
-'use client'
+"use client"
 import React, { useState, useEffect } from 'react';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 import { Line } from 'react-chartjs-2';
@@ -13,9 +13,9 @@ ChartJS.register(
   Legend
 );
 
-type InputState = {
-  principal: string;
-  rate: string;
+type RateState = {
+  presentValue: string;
+  futureValue: string;
   years: string;
   compounds: string;
   result: string;
@@ -30,39 +30,39 @@ type InputState = {
   } | null;
 };
 
-const CompoundCalculator = () => {
-  const [state, setState] = useState<InputState>({
-    principal: '10000',
-    rate: '10',
+const RateCalculator = () => {
+  const [state, setState] = useState<RateState>({
+    presentValue: '10000',
+    futureValue: '20000',
     years: '5',
     compounds: '1',
     result: '',
     chartData: null
   });
 
-  const { principal, rate, years, compounds, result } = state;
+  const { presentValue, futureValue, years, compounds, result } = state;
 
-  const calculateCompound = () => {
-    const p = parseFloat(principal);
-    const r = parseFloat(rate) / 100;
-    const n = parseInt(compounds, 10) || 1; // 默认复利次数为1
+  const calculateRate = () => {
+    const pv = parseFloat(presentValue);
+    const fv = parseFloat(futureValue);
     const t = parseInt(years, 10) || 0;
+    const n = parseInt(compounds, 10) || 1;
 
-    if (isNaN(p) || isNaN(r) || isNaN(n) || isNaN(t)) return;
+    if (isNaN(pv) || isNaN(fv) || isNaN(t) || isNaN(n) || t <= 0 || n <= 0) return;
 
-    const amount = p * Math.pow(1 + r / n, n * t);
+    const rate = n * (Math.pow(fv / pv, 1 / (n * t)) - 1) * 100;
     
     // 生成图表数据
     const labels = Array.from({length: t + 1}, (_, i) => i);
     const data = labels.map(year => {
-      return p * Math.pow(1 + r / n, n * year);
+      return pv * Math.pow(1 + rate / 100 / n, n * year);
     });
     
     const chartData = {
       labels,
       datasets: [
         {
-          label: '复利增长曲线',
+          label: '价值增长曲线',
           data,
           borderColor: 'rgb(75, 192, 192)',
           backgroundColor: 'rgba(75, 192, 192, 0.5)',
@@ -72,12 +72,12 @@ const CompoundCalculator = () => {
     
     setState(prev => ({ 
       ...prev, 
-      result: amount.toFixed(2),
+      result: rate.toFixed(2),
       chartData 
     }));
   };
 
-  const handleInputChange = (field: keyof InputState) => (
+  const handleInputChange = (field: keyof RateState) => (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
     const value = e.target.value;
@@ -85,29 +85,40 @@ const CompoundCalculator = () => {
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-8 bg-white shadow-md rounded-lg mt-10">
-      <h1 className="text-3xl font-bold text-center mb-8">复利计算器</h1>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+      <div className="max-w-4xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
+        <div className="text-center mb-12">
+          <h1 className="text-5xl font-extrabold text-gray-900 mb-6">
+            <span className="text-blue-600">利率</span>计算器
+          </h1>
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
+            根据现值和终值计算所需利率
+          </p>
+        </div>
+
+        <div className="bg-white rounded-xl shadow-lg p-8 border border-gray-100">
 
       <div className="flex flex-col space-y-4">
-        {/* 本金输入 */}
+        {/* 现值输入 */}
         <div className="flex items-center space-x-4">
-          <label className="w-32">本金：</label>
+          <label className="w-32">现值：</label>
           <input
             type="number"
-            value={principal}
-            onChange={handleInputChange('principal')}
+            step="0.01"
+            value={presentValue}
+            onChange={handleInputChange('presentValue')}
             className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
 
-        {/* 年利率输入 */}
+        {/* 终值输入 */}
         <div className="flex items-center space-x-4">
-          <label className="w-32">年利率(%)：</label>
+          <label className="w-32">终值：</label>
           <input
             type="number"
             step="0.01"
-            value={rate}
-            onChange={handleInputChange('rate')}
+            value={futureValue}
+            onChange={handleInputChange('futureValue')}
             className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
@@ -136,7 +147,7 @@ const CompoundCalculator = () => {
 
         {/* 计算按钮 */}
         <button
-          onClick={calculateCompound}
+          onClick={calculateRate}
           className="w-full bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-200 mt-4"
         >
           计算
@@ -147,10 +158,10 @@ const CompoundCalculator = () => {
       {result && (
         <div className="mt-8 p-6 bg-gray-100 rounded-lg">
           <p className="text-2xl font-semibold text-green-600">
-            总金额：${result}
+            年利率：{result}%
           </p>
           <p className="mt-2 text-gray-600">
-            公式：A = P(1 + r/n)^(nt)
+            公式：r = n × ( (FV/PV)^(1/(n×t)) - 1 ) × 100
           </p>
           
           {state.chartData && (
@@ -162,7 +173,7 @@ const CompoundCalculator = () => {
                   plugins: {
                     title: {
                       display: true,
-                      text: '复利增长曲线图'
+                      text: '价值增长曲线图'
                     },
                   },
                 }}
@@ -171,8 +182,10 @@ const CompoundCalculator = () => {
           )}
         </div>
       )}
+        </div>
+      </div>
     </div>
   );
 };
 
-export default CompoundCalculator;
+export default RateCalculator;

@@ -170,8 +170,18 @@ const calculate = () => {
   }, [monthlyInvestment, annualRate, inflationRate, initialPrincipal, state.yearsToShow]);  // 添加依赖
 
   return (
-    <div className="max-w-2xl mx-auto p-8 bg-white shadow-md rounded-lg mt-10">
-      <h1 className="text-3xl font-bold text-center mb-8">储蓄复利计算器</h1>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+      <div className="max-w-4xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
+        <div className="text-center mb-12">
+          <h1 className="text-5xl font-extrabold text-gray-900 mb-6">
+            <span className="text-blue-600">储蓄复利</span>计算器
+          </h1>
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
+            计算定期定额投资的复利增长效果，对比无复利情况
+          </p>
+        </div>
+
+        <div className="bg-white rounded-xl shadow-lg p-8 border border-gray-100">
 
       <div className="flex flex-col space-y-4">
         {/* 每月定投 */}
@@ -325,6 +335,8 @@ const calculate = () => {
           />
         </div>
       )}
+        </div>
+      </div>
     </div>
   );
 };

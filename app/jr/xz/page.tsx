@@ -13,8 +13,8 @@ ChartJS.register(
   Legend
 );
 
-type FutureValueState = {
-  pv: string;        // 现值
+type PresentValueState = {
+  fv: string;        // 终值
   rate: string;      // 年利率
   years: string;     // 年数
   compounds: string; // 复利次数
@@ -30,9 +30,9 @@ type FutureValueState = {
   } | null;
 };
 
-const FutureValueCalculator = () => {
-  const [state, setState] = useState<FutureValueState>({
-    pv: '1000-',
+const PresentValueCalculator = () => {
+  const [state, setState] = useState<PresentValueState>({
+    fv: '10000',
     rate: '10',
     years: '5',
     compounds: '1',
@@ -40,29 +40,29 @@ const FutureValueCalculator = () => {
     chartData: null
   });
 
-  const { pv, rate, years, compounds, result } = state;
+  const { fv, rate, years, compounds, result } = state;
 
-  const calculateFutureValue = () => {
-    const presentValue = parseFloat(pv);
+  const calculatePresentValue = () => {
+    const fValue = parseFloat(fv);
     const r = parseFloat(rate) / 100;
-    const n = parseInt(compounds, 10) || 1; // 默认复利次数为1
+    const n = parseInt(compounds, 10) || 1; // 复利次数默认1
     const t = parseInt(years, 10) || 0;
 
-    if (isNaN(presentValue) || isNaN(r) || isNaN(n) || isNaN(t)) return;
+    if (isNaN(fValue) || isNaN(r) || isNaN(n) || isNaN(t)) return;
 
-    const fv = presentValue * Math.pow(1 + r / n, n * t);
+    const pv = fValue / Math.pow(1 + r / n, n * t);
     
     // 生成图表数据
     const labels = Array.from({length: t + 1}, (_, i) => i);
     const data = labels.map(year => {
-      return presentValue * Math.pow(1 + r / n, n * year);
+      return fValue / Math.pow(1 + r / n, n * year);
     });
     
     const chartData = {
       labels,
       datasets: [
         {
-          label: '终值增长曲线',
+          label: '现值变化曲线',
           data,
           borderColor: 'rgb(75, 192, 192)',
           backgroundColor: 'rgba(75, 192, 192, 0.5)',
@@ -72,12 +72,12 @@ const FutureValueCalculator = () => {
     
     setState(prev => ({ 
       ...prev, 
-      result: fv.toFixed(2),
+      result: pv.toFixed(2),
       chartData 
     }));
   };
 
-  const handleInputChange = (field: keyof FutureValueState) => (
+  const handleInputChange = (field: keyof PresentValueState) => (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
     const value = e.target.value;
@@ -85,18 +85,28 @@ const FutureValueCalculator = () => {
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-8 bg-white shadow-md rounded-lg mt-10">
-      <h1 className="text-3xl font-bold text-center mb-8">终值计算器</h1>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+      <div className="max-w-4xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
+        <div className="text-center mb-12">
+          <h1 className="text-5xl font-extrabold text-gray-900 mb-6">
+            <span className="text-blue-600">现值</span>计算器
+          </h1>
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
+            计算资金当前价值，支持复利现值计算
+          </p>
+        </div>
+
+        <div className="bg-white rounded-xl shadow-lg p-8 border border-gray-100">
 
       <div className="flex flex-col space-y-4">
-        {/* 现值输入 */}
+        {/* 终值输入 */}
         <div className="flex items-center space-x-4">
-          <label className="w-32">现值：</label>
+          <label className="w-32">终值：</label>
           <input
             type="number"
             step="0.01"
-            value={pv}
-            onChange={handleInputChange('pv')}
+            value={fv}
+            onChange={handleInputChange('fv')}
             className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
@@ -137,7 +147,7 @@ const FutureValueCalculator = () => {
 
         {/* 计算按钮 */}
         <button
-          onClick={calculateFutureValue}
+          onClick={calculatePresentValue}
           className="w-full bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-200 mt-4"
         >
           计算
@@ -148,10 +158,10 @@ const FutureValueCalculator = () => {
       {result && (
         <div className="mt-8 p-6 bg-gray-100 rounded-lg">
           <p className="text-2xl font-semibold text-green-600">
-            终值：${result}
+            现值：${result}
           </p>
           <p className="mt-2 text-gray-600">
-            公式：FV = PV × (1 + r/n)^(nt)
+            公式：PV = FV/(1 + r/n)^(nt)
           </p>
           
           {state.chartData && (
@@ -163,7 +173,7 @@ const FutureValueCalculator = () => {
                   plugins: {
                     title: {
                       display: true,
-                      text: '终值增长曲线图'
+                      text: '现值变化曲线图'
                     },
                   },
                 }}
@@ -172,8 +182,10 @@ const FutureValueCalculator = () => {
           )}
         </div>
       )}
+        </div>
+      </div>
     </div>
   );
 };
 
-export default FutureValueCalculator;
+export default PresentValueCalculator;
