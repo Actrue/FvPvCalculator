@@ -1,6 +1,7 @@
 // SavingsCompoundCalculator.tsx
 "use client"
 import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 
@@ -61,8 +62,8 @@ const SavingsCompoundCalculator = () => {
     resultTotal,
     resultNoCompound,
     ratio,
-    chartData,
-    yearsToShow
+    // chartData,  // 移除未使用的变量
+    // yearsToShow  // 移除未使用的变量
   } = state;
 
   const calculateCompoundGrowth = (principal: number, monthlyDeposit: number, annualRate: number, inflationRate: number, years: number) => {
@@ -99,7 +100,7 @@ const calculate = () => {
     let current = p;
     let noCompound = p;
     let years = 0;
-    let monthly = m * 12; // 年定投总额
+    const monthly = m * 12; // 年定投总额
 
     // 设置最大循环次数防止死循环
     const maxIterations = 200;
@@ -170,18 +171,31 @@ const calculate = () => {
   }, [monthlyInvestment, annualRate, inflationRate, initialPrincipal, state.yearsToShow]);  // 添加依赖
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+    <div className="min-h-screen bg-white">
+      {/* 返回首页链接 */}
+      <div className="p-4">
+        <Link
+          href="/"
+          className="inline-flex items-center text-black hover:text-gray-600 transition-colors"
+        >
+          <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+          </svg>
+          返回首页
+        </Link>
+      </div>
+
       <div className="max-w-4xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h1 className="text-5xl font-extrabold text-gray-900 mb-6">
-            <span className="text-blue-600">储蓄复利</span>计算器
+          <h1 className="text-4xl font-bold text-black mb-6">
+            储蓄复利计算器
           </h1>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
             计算定期定额投资的复利增长效果，对比无复利情况
           </p>
         </div>
 
-        <div className="bg-white rounded-xl shadow-lg p-8 border border-gray-100">
+        <div className="bg-white rounded-2xl p-8 border border-gray-200">
 
       <div className="flex flex-col space-y-4">
         {/* 每月定投 */}

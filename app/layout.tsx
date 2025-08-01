@@ -6,14 +6,14 @@ import GlobalHeader from "../src/components/全局导航头部";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Actrue - 工具平台与技术博客",
-  description: "Actrue是一个集成了实用工具和技术博客的现代化平台，提供金融计算器、生活实用工具等在线工具，以及高质量的技术文章分享。",
-  keywords: "工具, 计算器, 金融工具, 实用工具, 在线工具, 技术博客, 编程, 开发",
+  title: "Actrue - 工具平台",
+  description: "Actrue是一个集成了实用工具的现代化平台，提供金融计算器、生活实用工具等在线工具。",
+  keywords: "工具, 计算器, 金融工具, 实用工具, 在线工具, 编程, 开发",
   authors: [{ name: "Actrue" }],
   themeColor: "#1e293b",
   openGraph: {
-    title: "Actrue - 工具平台与技术博客",
-    description: "Actrue是一个集成了实用工具和技术博客的现代化平台，提供金融计算器、生活实用工具等在线工具，以及高质量的技术文章分享。",
+    title: "Actrue - 工具平台",
+    description: "Actrue是一个集成了实用工具的现代化平台，提供金融计算器、生活实用工具等在线工具。",
     type: "website",
     locale: "zh_CN",
   },

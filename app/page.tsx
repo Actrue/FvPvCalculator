@@ -11,10 +11,10 @@ export default function HomePage() {
               Actrue
             </h1>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed mb-8">
-              专业的工具集合平台与技术博客
+              专业的工具集合平台
             </p>
             <p className="text-lg text-gray-500 mb-12">
-              提升您的工作效率，分享技术见解
+              提升您的工作效率
             </p>
           </div>
         </div>
@@ -22,8 +22,7 @@ export default function HomePage() {
 
       {/* 主要模块区域 */}
       <div className="max-w-6xl mx-auto px-4 py-16 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          {/* Actrue Tool 模块 */}
+        <div className="grid grid-cols-1 gap-8">
           <Link
             href="/tools"
             className="group relative bg-white rounded-2xl p-8 border border-gray-200 hover:border-gray-300 transition-all duration-300 hover:shadow-sm"
@@ -47,37 +46,6 @@ export default function HomePage() {
               </div>
               <div className="flex items-center text-black font-medium">
                 探索工具
-                <svg className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </div>
-            </div>
-          </Link>
-
-          {/* Actrue Blog 模块 */}
-          <Link
-            href="/blog"
-            className="group relative bg-white rounded-2xl p-8 border border-gray-200 hover:border-gray-300 transition-all duration-300 hover:shadow-sm"
-          >
-            <div className="relative">
-              <div className="w-16 h-16 bg-black rounded-xl flex items-center justify-center mb-6">
-                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                </svg>
-              </div>
-              <h2 className="text-3xl font-bold text-black mb-4">
-                Actrue Blog
-              </h2>
-              <p className="text-gray-600 text-lg mb-6 leading-relaxed">
-                技术博客平台，分享前端开发、编程技巧、项目经验和技术见解
-              </p>
-              <div className="flex flex-wrap gap-2 mb-6">
-                <span className="px-3 py-1 border border-gray-300 text-gray-700 rounded-full text-sm">前端开发</span>
-                <span className="px-3 py-1 border border-gray-300 text-gray-700 rounded-full text-sm">技术分享</span>
-                <span className="px-3 py-1 border border-gray-300 text-gray-700 rounded-full text-sm">项目经验</span>
-              </div>
-              <div className="flex items-center text-black font-medium">
-                阅读文章
                 <svg className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
@@ -125,7 +93,7 @@ export default function HomePage() {
 
       {/* 底部信息 */}
       <div className="text-center text-gray-500 py-8">
-        <p>© 2024 Actrue. 专业工具与技术分享平台</p>
+        <p>© 2024 Actrue. 专业工具平台</p>
       </div>
     </div>
   );

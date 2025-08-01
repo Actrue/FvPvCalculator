@@ -1,5 +1,6 @@
 'use client'
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import Link from 'next/link';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 
@@ -85,18 +86,31 @@ const PresentValueCalculator = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+    <div className="min-h-screen bg-white">
+      {/* 返回首页链接 */}
+      <div className="p-4">
+        <Link
+          href="/"
+          className="inline-flex items-center text-black hover:text-gray-600 transition-colors"
+        >
+          <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+          </svg>
+          返回首页
+        </Link>
+      </div>
+
       <div className="max-w-4xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h1 className="text-5xl font-extrabold text-gray-900 mb-6">
-            <span className="text-blue-600">现值</span>计算器
+          <h1 className="text-4xl font-bold text-black mb-6">
+            现值计算器
           </h1>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
             计算资金当前价值，支持复利现值计算
           </p>
         </div>
 
-        <div className="bg-white rounded-xl shadow-lg p-8 border border-gray-100">
+        <div className="bg-white rounded-2xl p-8 border border-gray-200">
 
       <div className="flex flex-col space-y-4">
         {/* 终值输入 */}

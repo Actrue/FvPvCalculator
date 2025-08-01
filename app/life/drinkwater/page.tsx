@@ -38,7 +38,7 @@ const WaterIntakeCalculator = () => {
     const weightNum = parseFloat(weight);
     const heightNum = parseFloat(height);
 
-    const { states, message: msg, data } = calculateDailyWaterIntake(
+    const { message: msg, data } = calculateDailyWaterIntake(
       gender,
       ageNum,
       weightNum,

@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { 获取币种现价 } from './function';
 
 type TradeRecord = {
@@ -13,6 +14,7 @@ type TradeRecord = {
   stopLossPrice: number | null;
   takeProfitPrice: number | null;
   calculatedProfitPercent: number | null;
+  currentProfitPercent: number | null;
   createdAt: number;
 };
 
@@ -29,16 +31,16 @@ export default function FXCalculator() {
   const [records, setRecords] = useState<TradeRecord[]>([]);
   const [editingRecord, setEditingRecord] = useState<TradeRecord | null>(null);
   const [currentPrice, setCurrentPrice] = useState<number | null>(null);
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);  // 移除未使用的变量
 
   // 获取当前比特币价格
   const fetchCurrentPrice = async () => {
-    setLoading(true);
+    // setLoading(true);  // 移除未使用的状态更新
     const result = await 获取币种现价('BTC-USD-SWAP');
     if (result.states && result.data) {
       setCurrentPrice(parseFloat(result.data.last));
     }
-    setLoading(false);
+    // setLoading(false);  // 移除未使用的状态更新
   };
 
   // Load saved data from localStorage on component mount
@@ -83,11 +85,11 @@ export default function FXCalculator() {
   };
 
   // 计算目标收益率
-  const calculateTargetProfit = (entryPrice: string, targetPrice: string) => {
-    const entry = parseFloat(entryPrice);
-    const target = parseFloat(targetPrice);
-    return ((target - entry) / entry * 100).toFixed(2);
-  };
+  // const calculateTargetProfit = (entryPrice: string, targetPrice: string) => {  // 移除未使用的函数
+  //   const entry = parseFloat(entryPrice);
+  //   const target = parseFloat(targetPrice);
+  //   return ((target - entry) / entry * 100).toFixed(2);
+  // };
 
   const saveRecord = () => {
     if (!entryPrice || !leverage || !maxLossPercent || (!targetProfitPercent && !targetPrice)) return;
@@ -100,9 +102,9 @@ export default function FXCalculator() {
       maxLossPercent,
       targetProfitPercent,
       targetPrice,
-      stopLossPrice,
-      takeProfitPrice,
-     
+      stopLossPrice: null,
+      takeProfitPrice: null,
+      calculatedProfitPercent: null,
       currentProfitPercent: currentPrice ? parseFloat(calculateCurrentProfit(entryPrice, currentPrice)) : 0,
       createdAt: Date.now()
     };
@@ -181,8 +183,32 @@ export default function FXCalculator() {
   };
 
   return (
-    <div className="p-4 max-w-md mx-auto">
-      <h1 className="text-xl font-bold mb-4">止损点/收益点计算器</h1>
+    <div className="min-h-screen bg-white">
+      {/* 返回首页链接 */}
+      <div className="p-4">
+        <Link
+          href="/"
+          className="inline-flex items-center text-black hover:text-gray-600 transition-colors"
+        >
+          <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+          </svg>
+          返回首页
+        </Link>
+      </div>
+
+      <div className="max-w-4xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
+        <div className="text-center mb-12">
+          <h1 className="text-4xl font-bold text-black mb-6">
+            止损点/收益点计算器
+          </h1>
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
+            计算金融交易中的止损点和收益点价格
+          </p>
+        </div>
+
+        <div className="bg-white rounded-2xl p-8 border border-gray-200 max-w-md mx-auto">
+      <h1 className="text-xl font-bold mb-4">计算参数</h1>
       
       <div className="mb-4">
         <label className="block mb-2">交易类型</label>
@@ -358,6 +384,8 @@ export default function FXCalculator() {
           </div>
         </div>
       )}
+    </div>
+      </div>
     </div>
   );
 }

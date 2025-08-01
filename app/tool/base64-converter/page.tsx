@@ -16,11 +16,19 @@ interface ToastState {
   type: 'success' | 'error' | 'info';
 }
 
+// API响应数据结构
+interface FetchSubscriptionResponse {
+  success?: boolean;
+  base64Content?: string;
+  originalLength?: number;
+  error?: string;
+}
+
 export default function Base64ConverterPage() {
   const [inputText, setInputText] = useState('');
   const [nodes, setNodes] = useState<ProxyNode[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState('');  // 恢复使用的变量
   const [showExample, setShowExample] = useState(false);
   const [toast, setToast] = useState<ToastState>({ show: false, message: '', type: 'success' });
 
@@ -28,7 +36,7 @@ export default function Base64ConverterPage() {
   const decodeBase64 = (str: string): string => {
     try {
       return atob(str);
-    } catch (e) {
+    } catch (err) {  // 重命名未使用的变量
       throw new Error('无效的Base64编码');
     }
   };
@@ -126,7 +134,7 @@ export default function Base64ConverterPage() {
         body: JSON.stringify({ url: content }),
       });
 
-      const result = await response.json();
+      const result = await response.json() as FetchSubscriptionResponse;
       
       if (!response.ok) {
         throw new Error(result.error || '获取订阅内容失败');
@@ -137,7 +145,7 @@ export default function Base64ConverterPage() {
       }
 
       // 使用API返回的base64内容
-      const base64Content = result.base64Content;
+      const base64Content = result.base64Content || '';
       
       // 尝试Base64解码
       let decodedContent;
@@ -247,7 +255,7 @@ export default function Base64ConverterPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+    <div className="min-h-screen bg-white">
       {/* Toast通知 */}
       {toast.show && (
         <Toast
@@ -256,6 +264,19 @@ export default function Base64ConverterPage() {
           onClose={closeToast}
         />
       )}
+      {/* 返回首页链接 */}
+      <div className="p-4">
+        <Link
+          href="/"
+          className="inline-flex items-center text-black hover:text-gray-600 transition-colors"
+        >
+          <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+          </svg>
+          返回首页
+        </Link>
+      </div>
+
       <div className="max-w-4xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
         {/* 返回首页链接 */}
         <div className="mb-6">
@@ -271,17 +292,17 @@ export default function Base64ConverterPage() {
         </div>
 
         {/* 标题区域 */}
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">
-            🎬 Base64订阅链接转换器
+        <div className="text-center py-12">
+          <h1 className="text-4xl font-bold text-black mb-4">
+            Base64订阅链接转换器
           </h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
             将Base64编码的订阅链接转换为Clash等代理工具可识别的节点URL格式
           </p>
         </div>
 
         {/* 主要内容卡片 */}
-        <div className="bg-white rounded-xl shadow-lg p-6 mb-6">
+        <div className="bg-white rounded-2xl p-8 border border-gray-200">
           {/* 输入区域 */}
           <div className="mb-6">
             <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -389,7 +410,7 @@ export default function Base64ConverterPage() {
         </div>
 
         {/* 示例和说明 */}
-        <div className="bg-white rounded-xl shadow-lg p-6">
+        <div className="bg-white rounded-2xl p-8 border border-gray-200">
           <button
             onClick={() => setShowExample(!showExample)}
             className="flex items-center justify-between w-full text-left"

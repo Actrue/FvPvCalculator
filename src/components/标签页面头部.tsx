@@ -1,7 +1,14 @@
 'use client';
 
-import Link from 'next/link';
-import { Tag } from '../../data/博客文章类型定义';
+// import Link from 'next/link';  // 移除未使用的导入
+
+// 定义标签数据结构
+interface Tag {
+  id: string;
+  name: string;
+  description: string;
+  color: string;
+}
 
 interface TagHeaderProps {
   tag: Tag;
@@ -14,23 +21,10 @@ interface TagHeaderProps {
 export default function TagHeader({ tag, postCount }: TagHeaderProps) {
   return (
     <header className="bg-white/5 backdrop-blur-sm border border-gray-700 rounded-xl p-6 md:p-8">
-      {/* 面包屑导航 */}
-      <nav className="flex items-center space-x-2 text-sm text-gray-400 mb-6">
-        <Link 
-          href="/blog" 
-          className="hover:text-white transition-colors duration-200"
-        >
-          博客首页
-        </Link>
-        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-        </svg>
-        <span className="text-white">标签</span>
-        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-        </svg>
-        <span className="text-white">#{tag.name}</span>
-      </nav>
+      {/* 页面标题 */}
+      <div className="mb-6">
+        <h1 className="text-3xl md:text-4xl font-bold text-white">标签: #{tag.name}</h1>
+      </div>
       
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
         {/* 标签信息 */}
@@ -66,33 +60,6 @@ export default function TagHeader({ tag, postCount }: TagHeaderProps) {
           )}
         </div>
         
-        {/* 操作按钮 */}
-        <div className="flex flex-col sm:flex-row gap-3">
-          {/* 搜索按钮 */}
-          <Link
-            href="/blog/search"
-            className="inline-flex items-center justify-center space-x-2 px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-colors duration-200"
-          >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-            </svg>
-            <span>搜索文章</span>
-          </Link>
-          
-          {/* 关注标签按钮（可选功能） */}
-          <button
-            className="inline-flex items-center justify-center space-x-2 px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700 text-white rounded-lg transition-all duration-200 transform hover:scale-105"
-            onClick={() => {
-              // 这里可以添加关注标签功能
-              alert('关注标签功能开发中...');
-            }}
-          >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-            </svg>
-            <span>关注标签</span>
-          </button>
-        </div>
       </div>
       
       {/* 标签统计信息 */}

@@ -1,8 +1,23 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+// 定义请求体接口
+interface RequestBody {
+  url: string;
+}
+
 export async function POST(request: NextRequest) {
   try {
-    const { url } = await request.json();
+    const body = await request.json();
+    
+    // 类型检查
+    if (!body || typeof body !== 'object' || !('url' in body)) {
+      return NextResponse.json(
+        { error: '请求体格式错误' },
+        { status: 400 }
+      );
+    }
+    
+    const { url } = body as RequestBody;
     
     // 验证URL格式
     if (!url || typeof url !== 'string') {
