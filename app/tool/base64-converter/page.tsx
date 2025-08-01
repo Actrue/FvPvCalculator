@@ -36,7 +36,7 @@ export default function Base64ConverterPage() {
   const decodeBase64 = (str: string): string => {
     try {
       return atob(str);
-    } catch (err) {  // 重命名未使用的变量
+    } catch (_) {  // 重命名未使用的变量
       throw new Error('无效的Base64编码');
     }
   };

@@ -70,7 +70,7 @@ export default function SitemapFinderPage() {
         status: response.status,
         found: response.ok
       };
-    } catch (error) {
+    } catch {
       return {
         url,
         status: 0,
@@ -173,7 +173,7 @@ export default function SitemapFinderPage() {
           type: 'success'
         });
       }
-    } catch (error) {
+    } catch (_) {
       setError('查找过程中发生错误');
     } finally {
       setIsLoading(false);
@@ -362,7 +362,7 @@ export default function SitemapFinderPage() {
               1. 在输入框中输入网站的根URL（例如：https://example.com）
             </p>
             <p>
-              2. 点击"查找网站地图"按钮开始查找
+              2. 点击&quot;查找网站地图&quot;按钮开始查找
             </p>
             <p>
               3. 工具会自动检查以下位置：

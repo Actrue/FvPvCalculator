@@ -10,7 +10,6 @@ import {
   getConsecutiveCheckinsForEvent,
   getCheckinHistoryForEvent,
   getMonthlyStatsForEvent,
-  getAllEventsStats
 } from '../../function/checkinAssistant';
 import { CheckinEvent, CheckinRecord } from '../../function/checkinAssistant';
 // import { getAllEventsStats } from '../../function/checkinAssistant';  // 移除未使用的导入
@@ -42,11 +41,19 @@ const CheckinAssistant = () => {
   const [dailyTarget, setDailyTarget] = useState<number | undefined>(undefined);
   const [weeklyTarget, setWeeklyTarget] = useState<number | undefined>(undefined);
   const [monthlyTarget, setMonthlyTarget] = useState<number | undefined>(undefined);
-
+  const loadEvents = useCallback(() => {
+    const eventsList = getCheckinEvents();
+    setEvents(eventsList);
+    
+    // 如果没有选中事件且有事件存在，选择第一个事件
+    if (!selectedEventId && eventsList.length > 0) {
+      setSelectedEventId(eventsList[0].id);
+    }
+  }, [selectedEventId]);
   // 初始化数据
   useEffect(() => {
     loadEvents();
-  }, []); // 仅在组件挂载时执行一次
+  }, [loadEvents]); // 添加 loadEvents 到依赖数组
  const loadDataForEvent = useCallback((eventId: string) => {
     // 获取今天的打卡状态
     const todayRecord = getTodayCheckinForEvent(eventId);
@@ -75,15 +82,7 @@ const CheckinAssistant = () => {
     }
   }, [selectedEventId, currentMonth, loadDataForEvent]); // 添加 loadDataForEvent 到依赖数组
 
-  const loadEvents = useCallback(() => {
-    const eventsList = getCheckinEvents();
-    setEvents(eventsList);
-    
-    // 如果没有选中事件且有事件存在，选择第一个事件
-    if (!selectedEventId && eventsList.length > 0) {
-      setSelectedEventId(eventsList[0].id);
-    }
-  }, [selectedEventId]);
+
 
  
 
