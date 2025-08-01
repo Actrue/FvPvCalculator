@@ -180,3 +180,205 @@ export default function SitemapFinderPage() {
     }
   };
 
+  // 复制URL到剪贴板
+  const copyToClipboard = async (text: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setToast({
+        show: true,
+        message: 'URL已复制到剪贴板',
+        type: 'success'
+      });
+    } catch {
+      setToast({
+        show: true,
+        message: '复制失败，请手动复制',
+        type: 'error'
+      });
+    }
+  };
+
+  // 关闭Toast
+  const closeToast = () => {
+    setToast({ ...toast, show: false });
+  };
+
+  // 清空输入
+  const handleClear = () => {
+    setInputUrl('');
+    setResults([]);
+    setError('');
+  };
+
+  return (
+    <div className="min-h-screen bg-white">
+      {/* Toast通知 */}
+      {toast.show && (
+        <Toast
+          message={toast.message}
+          type={toast.type}
+          onClose={closeToast}
+        />
+      )}
+      
+      {/* 返回首页链接 */}
+      <div className="p-4">
+        <Link
+          href="/"
+          className="inline-flex items-center text-black hover:text-gray-600 transition-colors"
+        >
+          <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+          </svg>
+          返回首页
+        </Link>
+      </div>
+
+      <div className="max-w-4xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+        {/* 标题区域 */}
+        <div className="text-center py-12">
+          <h1 className="text-4xl font-bold text-black mb-4">
+            网站地图查找工具
+          </h1>
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            快速查找网站的网站地图(sitemap.xml)
+          </p>
+        </div>
+
+        {/* 主要内容卡片 */}
+        <div className="bg-white rounded-2xl p-8 border border-gray-200">
+          {/* 输入区域 */}
+          <div className="mb-6">
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              网站URL
+            </label>
+            <input
+              type="text"
+              value={inputUrl}
+              onChange={(e) => setInputUrl(e.target.value)}
+              placeholder="请输入网站URL，例如：https://example.com"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            />
+          </div>
+
+          {/* 操作按钮 */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+            <button
+              onClick={findSitemaps}
+              disabled={isLoading}
+              className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors font-medium flex items-center justify-center gap-2"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+              {isLoading ? '查找中...' : '查找网站地图'}
+            </button>
+            <button
+              onClick={handleClear}
+              className="bg-gray-600 text-white px-6 py-3 rounded-lg hover:bg-gray-700 transition-colors font-medium flex items-center justify-center gap-2"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+              </svg>
+              清空
+            </button>
+          </div>
+          
+          {/* 错误提示 */}
+          {error && (
+            <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+              <div className="flex items-center">
+                <svg className="w-5 h-5 text-red-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span className="text-red-700">{error}</span>
+              </div>
+            </div>
+          )}
+
+          {/* 结果展示区域 */}
+          {results.length > 0 && (
+            <div>
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">
+                查找结果
+              </h3>
+              <div className="space-y-3">
+                {results.map((result, index) => (
+                  <div 
+                    key={index} 
+                    className={`border rounded-lg p-4 ${
+                      result.found 
+                        ? 'border-green-200 bg-green-50' 
+                        : 'border-red-200 bg-red-50'
+                    }`}
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="flex-1 min-w-0">
+                        <p className={`text-sm font-medium truncate ${
+                          result.found ? 'text-green-800' : 'text-red-800'
+                        }`}>
+                          {result.url}
+                        </p>
+                        <p className="text-xs text-gray-500 mt-1">
+                          状态码: {result.status || '无法访问'}
+                        </p>
+                      </div>
+                      <div className="flex items-center ml-4">
+                        {result.found ? (
+                          <>
+                            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 mr-2">
+                              找到
+                            </span>
+                            <button
+                              onClick={() => copyToClipboard(result.url)}
+                              className="text-blue-600 hover:text-blue-900"
+                            >
+                              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                              </svg>
+                            </button>
+                          </>
+                        ) : (
+                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                            未找到
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* 使用说明 */}
+        <div className="bg-white rounded-2xl p-8 border border-gray-200 mt-8">
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">
+            使用说明
+          </h3>
+          <div className="text-gray-600 space-y-2">
+            <p>
+              1. 在输入框中输入网站的根URL（例如：https://example.com）
+            </p>
+            <p>
+              2. 点击"查找网站地图"按钮开始查找
+            </p>
+            <p>
+              3. 工具会自动检查以下位置：
+            </p>
+            <ul className="list-disc list-inside ml-4 space-y-1">
+              <li>/sitemap.xml</li>
+              <li>/sitemap_index.xml</li>
+              <li>/sitemap.txt</li>
+              <li>robots.txt文件中的Sitemap声明</li>
+            </ul>
+            <p>
+              4. 查找结果会显示每个网站地图的访问状态
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
