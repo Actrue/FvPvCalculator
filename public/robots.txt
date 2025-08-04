@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://jrjsq.sereniblue.com
+
+# Sitemaps
+Sitemap: https://jrjsq.sereniblue.com/sitemap.xml
