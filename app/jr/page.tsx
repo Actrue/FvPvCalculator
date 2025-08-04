@@ -1,6 +1,22 @@
 // pages/index.tsx
 import Link from 'next/link'; // 使用 Next.js 原生的 Link 组件
 import { FC } from 'react';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: '金融计算器工具集合 - Actrue',
+  description: '提供各种金融计算器工具，包括现值计算器、终值计算器、复利计算器、储蓄复利计算器和利率计算器，帮助您进行金融计算和规划。',
+  keywords: '金融计算器, 现值计算器, 终值计算器, 复利计算器, 储蓄复利计算器, 利率计算器',
+  authors: [{ name: 'Actrue' }],
+  themeColor: '#1e293b',
+  openGraph: {
+    title: '金融计算器工具集合 - Actrue',
+    description: '提供各种金融计算器工具，包括现值计算器、终值计算器、复利计算器、储蓄复利计算器和利率计算器，帮助您进行金融计算和规划。',
+    type: 'website',
+    locale: 'zh_CN',
+  },
+};
+
 const HomePage: FC = () => {
   return (
     <div className="min-h-screen bg-white">

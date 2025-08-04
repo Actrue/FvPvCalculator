@@ -1,5 +1,20 @@
 import Link from 'next/link';
 import { FC } from 'react';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: '时间工具 - Actrue',
+  description: '查看当前年份周数进度与时间分布，帮助您更好地管理时间。',
+  keywords: '时间工具, 周数进度, 时间管理, 年度进度',
+  authors: [{ name: 'Actrue' }],
+  themeColor: '#1e293b',
+  openGraph: {
+    title: '时间工具 - Actrue',
+    description: '查看当前年份周数进度与时间分布，帮助您更好地管理时间。',
+    type: 'website',
+    locale: 'zh_CN',
+  },
+};
 
 const getCurrentWeek = (): [number, number] => {
   const now = new Date();

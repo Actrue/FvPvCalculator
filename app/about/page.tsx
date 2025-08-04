@@ -4,10 +4,13 @@ export const metadata: Metadata = {
   title: '关于我们 - Actrue',
   description: 'Actrue是一个专注于提供实用工具的现代化平台，致力于为用户提供高质量的工具和内容。',
   keywords: '关于, Actrue, 工具平台, 团队介绍',
+  authors: [{ name: 'Actrue' }],
+  themeColor: '#1e293b',
   openGraph: {
     title: '关于我们 - Actrue',
     description: 'Actrue是一个专注于提供实用工具的现代化平台，致力于为用户提供高质量的工具和内容。',
     type: 'website',
+    locale: 'zh_CN',
   },
 };
 

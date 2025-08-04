@@ -1,4 +1,19 @@
 import Link from 'next/link';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Actrue - 专业的工具集合平台',
+  description: 'Actrue是一个专业的工具集合平台，提供金融计算器、生活工具、时间管理等多种实用工具，提升您的工作效率。',
+  keywords: '工具, 计算器, 金融工具, 生活工具, 效率工具, 在线工具',
+  authors: [{ name: 'Actrue' }],
+  themeColor: '#1e293b',
+  openGraph: {
+    title: 'Actrue - 专业的工具集合平台',
+    description: 'Actrue是一个专业的工具集合平台，提供金融计算器、生活工具、时间管理等多种实用工具，提升您的工作效率。',
+    type: 'website',
+    locale: 'zh_CN',
+  },
+};
 
 export default function HomePage() {
   return (

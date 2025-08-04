@@ -6,10 +6,13 @@ export const metadata: Metadata = {
   title: 'Actrue Tools - 实用工具集合',
   description: '提供各种实用的在线工具，包括金融计算器、生活实用工具、效率提升工具等，让您的生活更便捷。',
   keywords: '工具, 计算器, 金融工具, 实用工具, 在线工具, 效率工具',
+  authors: [{ name: 'Actrue' }],
+  themeColor: '#1e293b',
   openGraph: {
     title: 'Actrue Tools - 实用工具集合',
     description: '提供各种实用的在线工具，包括金融计算器、生活实用工具、效率提升工具等，让您的生活更便捷。',
     type: 'website',
+    locale: 'zh_CN',
   },
 };
 
