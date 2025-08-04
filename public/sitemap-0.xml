@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
-<url><loc>https://jrjsq.sereniblue.com/jr/zz</loc><lastmod>2025-08-04T05:26:28.908Z</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-<url><loc>https://jrjsq.sereniblue.com/about</loc><lastmod>2025-08-04T05:26:28.909Z</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-<url><loc>https://jrjsq.sereniblue.com/life/drinkwater</loc><lastmod>2025-08-04T05:26:28.909Z</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+<url><loc>https://jrjsq.sereniblue.com/life/drinkwater</loc><lastmod>2025-08-04T07:51:22.034Z</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+<url><loc>https://jrjsq.sereniblue.com/life/checkin-assistant</loc><lastmod>2025-08-04T07:51:22.035Z</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+<url><loc>https://jrjsq.sereniblue.com/jr/zz</loc><lastmod>2025-08-04T07:51:22.035Z</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
 <url><loc>https://jrjsq.sereniblue.com/tool/base64-converter</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-<url><loc>https://jrjsq.sereniblue.com/tool/sitemap-finder</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-<url><loc>https://jrjsq.sereniblue.com/jr/xz</loc><lastmod>2025-08-04T05:26:28.909Z</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-<url><loc>https://jrjsq.sereniblue.com/jr/ll</loc><lastmod>2025-08-04T05:26:28.909Z</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
 <url><loc>https://jrjsq.sereniblue.com/tool/mindmap-editor</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-<url><loc>https://jrjsq.sereniblue.com/jr</loc><lastmod>2025-08-04T05:26:28.909Z</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-<url><loc>https://jrjsq.sereniblue.com</loc><lastmod>2025-08-04T05:26:28.909Z</lastmod><changefreq>daily</changefreq><priority>1</priority></url>
-<url><loc>https://jrjsq.sereniblue.com/tools</loc><lastmod>2025-08-04T05:26:28.909Z</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-<url><loc>https://jrjsq.sereniblue.com/time</loc><lastmod>2025-08-04T05:26:28.909Z</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-<url><loc>https://jrjsq.sereniblue.com/jr/fl</loc><lastmod>2025-08-04T05:26:28.909Z</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-<url><loc>https://jrjsq.sereniblue.com/life/checkin-assistant</loc><lastmod>2025-08-04T05:26:28.909Z</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+<url><loc>https://jrjsq.sereniblue.com/jr/cxfl</loc><lastmod>2025-08-04T07:51:22.035Z</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+<url><loc>https://jrjsq.sereniblue.com/tool/sitemap-finder</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
 <url><loc>https://jrjsq.sereniblue.com/tool/sing-box-config-generator</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-<url><loc>https://jrjsq.sereniblue.com/jr/fx</loc><lastmod>2025-08-04T05:26:28.909Z</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-<url><loc>https://jrjsq.sereniblue.com/jr/cxfl</loc><lastmod>2025-08-04T05:26:28.909Z</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+<url><loc>https://jrjsq.sereniblue.com/jr/fx</loc><lastmod>2025-08-04T07:51:22.035Z</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+<url><loc>https://jrjsq.sereniblue.com/about</loc><lastmod>2025-08-04T07:51:22.035Z</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+<url><loc>https://jrjsq.sereniblue.com</loc><lastmod>2025-08-04T07:51:22.035Z</lastmod><changefreq>daily</changefreq><priority>1</priority></url>
+<url><loc>https://jrjsq.sereniblue.com/jr</loc><lastmod>2025-08-04T07:51:22.035Z</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+<url><loc>https://jrjsq.sereniblue.com/tool/zlibrary-redirect/detect</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+<url><loc>https://jrjsq.sereniblue.com/time</loc><lastmod>2025-08-04T07:51:22.035Z</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+<url><loc>https://jrjsq.sereniblue.com/tools</loc><lastmod>2025-08-04T07:51:22.035Z</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+<url><loc>https://jrjsq.sereniblue.com/tool/zlibrary-redirect</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+<url><loc>https://jrjsq.sereniblue.com/jr/xz</loc><lastmod>2025-08-04T07:51:22.035Z</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+<url><loc>https://jrjsq.sereniblue.com/jr/ll</loc><lastmod>2025-08-04T07:51:22.035Z</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+<url><loc>https://jrjsq.sereniblue.com/jr/fl</loc><lastmod>2025-08-04T07:51:22.035Z</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
 </urlset>

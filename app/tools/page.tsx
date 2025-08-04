@@ -148,6 +148,22 @@ export default function ToolsPage() {
                 创建和编辑思维导图，支持导出图片和文本格式
               </p>
             </Link>
+            
+            {/* Z-Library 重定向 */}
+            <Link
+              href="/tool/zlibrary-redirect"
+              className="group bg-white rounded-xl p-6 border border-gray-200 hover:border-gray-300 transition-all duration-300 hover:shadow-sm"
+            >
+              <div className="w-12 h-12 bg-black rounded-lg flex items-center justify-center mb-4">
+                <div className="text-white text-lg">📚</div>
+              </div>
+              <h3 className="text-xl font-bold text-black mb-2">
+                Z-Library 重定向
+              </h3>
+              <p className="text-gray-600 text-sm">
+                自动检测可用的 Z-Library 域名并重定向，提供最快速、最稳定的访问体验
+              </p>
+            </Link>
           </div>
         </div>
 
