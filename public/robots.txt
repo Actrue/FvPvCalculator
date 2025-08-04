@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Host
-Host: https://jrjsq.sereniblue.com
+Host: https://actrue.sereniblue.com
 
 # Sitemaps
-Sitemap: https://jrjsq.sereniblue.com/sitemap.xml
+Sitemap: https://actrue.sereniblue.com/sitemap.xml
