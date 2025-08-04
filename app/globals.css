@@ -45,3 +45,54 @@ body {
     @apply bg-[rgb(var(--background))] text-[rgb(var(--foreground))];
   }
 }
+
+/* 黑白流动动画 */
+@keyframes rainbowFlow {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 200% 50%;
+  }
+}
+
+/* 飞入飞出动画 */
+@keyframes fly {
+  0% {
+    transform: translateX(-100vw);
+  }
+  50% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(100vw);
+  }
+}
+
+.animate-fly {
+  animation: fly 3s ease-in-out forwards;
+}
+
+.rainbow-text {
+  background: linear-gradient(
+    90deg,
+    #000000, #ffffff, #000000
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: rainbowFlow 4s linear infinite;
+}
+
+@media (min-width: 768px) {
+  .rainbow-text {
+    font-size: 3rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .rainbow-text {
+    font-size: 4rem;
+  }
+}

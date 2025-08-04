@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
+import Actrue动画组件 from '@/app/components/Actrue动画组件';
 
 export const metadata: Metadata = {
   title: 'Actrue - 专业的工具集合平台',
@@ -18,8 +19,23 @@ export const metadata: Metadata = {
 export default function HomePage() {
   return (
     <div className="min-h-screen bg-white">
+      <Actrue动画组件 />
       {/* Hero区域 */}
-      <div className="relative overflow-hidden">
+      <div className="relative rounded-2xl overflow-hidden w-full max-w-4xl mx-auto my-8 shadow-xl transition-all duration-300 hover:scale-[1.02]">
+        {/* Hero Image */}
+        <div
+          className="relative w-full h-96 bg-cover bg-center rounded-2xl"
+          style={{ backgroundImage: 'url(/Header.png)' }}
+        >
+          {/* Glassmorphism overlay */}
+          <div className="absolute inset-0 bg-white/20 backdrop-blur-lg rounded-2xl opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-6">
+            <div className="text-center text-gray-800 max-w-2xl">
+              <h2 className="text-3xl font-bold mb-4">欢迎来到 Actrue</h2>
+              <p className="text-lg mb-6">这是一个专业的工具集合平台，提供了多种实用工具来提升您的工作效率。</p>
+            
+            </div>
+          </div>
+        </div>
         <div className="relative max-w-7xl mx-auto px-4 py-24 sm:px-6 lg:px-8">
           <div className="text-center">
             <h1 className="text-6xl font-bold text-black mb-6">
