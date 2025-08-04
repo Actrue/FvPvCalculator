@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Toast from '../../components/Toast';
 
@@ -16,6 +16,13 @@ interface ToastState {
   type: 'success' | 'error' | 'info';
 }
 
+// 查询历史记录的数据结构
+interface SearchHistoryItem {
+  url: string;
+  timestamp: number; // 时间戳
+  foundCount: number; // 找到的sitemap数量
+}
+
 export default function SitemapFinderClient() {
   const [inputUrl, setInputUrl] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -23,6 +30,33 @@ export default function SitemapFinderClient() {
   const [error, setError] = useState('');
   const [toast, setToast] = useState<ToastState>({ show: false, message: '', type: 'success' });
   const [showExample, setShowExample] = useState(false);
+  const [searchHistory, setSearchHistory] = useState<SearchHistoryItem[]>([]);
+  const [showHistory, setShowHistory] = useState(false);
+
+  // 从localStorage加载搜索历史
+  useEffect(() => {
+    const savedHistory = localStorage.getItem('sitemapFinderHistory');
+    if (savedHistory) {
+      try {
+        const parsedHistory = JSON.parse(savedHistory);
+        // 验证数据结构
+        if (Array.isArray(parsedHistory)) {
+          setSearchHistory(parsedHistory);
+        }
+      } catch (e) {
+        console.error('Failed to parse search history', e);
+      }
+    }
+  }, []);
+
+  // 保存搜索历史到localStorage
+  const saveSearchHistory = (history: SearchHistoryItem[]) => {
+    try {
+      localStorage.setItem('sitemapFinderHistory', JSON.stringify(history));
+    } catch (e) {
+      console.error('Failed to save search history', e);
+    }
+  };
 
   // 常见的网站地图路径
   const sitemapPaths = [
@@ -159,8 +193,22 @@ export default function SitemapFinderClient() {
       
       setResults(results);
       
-      // 检查是否有找到的网站地图
+      // 只显示找到的网站地图
       const foundSitemaps = results.filter(r => r.found);
+      setResults(foundSitemaps);
+      
+      // 保存搜索历史
+      const newHistoryItem: SearchHistoryItem = {
+        url: normalizedUrl,
+        timestamp: Date.now(),
+        foundCount: foundSitemaps.length
+      };
+      
+      // 更新历史记录（限制最多保存50条记录）
+      const updatedHistory = [newHistoryItem, ...searchHistory].slice(0, 50);
+      setSearchHistory(updatedHistory);
+      saveSearchHistory(updatedHistory);
+      
       if (foundSitemaps.length === 0) {
         setToast({
           show: true,
@@ -209,6 +257,32 @@ export default function SitemapFinderClient() {
     setInputUrl('');
     setResults([]);
     setError('');
+  };
+
+  // 清除搜索历史
+  const clearSearchHistory = () => {
+    setSearchHistory([]);
+    try {
+      localStorage.removeItem('sitemapFinderHistory');
+      setToast({
+        show: true,
+        message: '搜索历史已清除',
+        type: 'success'
+      });
+    } catch (e) {
+      console.error('Failed to clear search history', e);
+      setToast({
+        show: true,
+        message: '清除搜索历史失败',
+        type: 'error'
+      });
+    }
+  };
+
+  // 格式化时间显示
+  const formatTime = (timestamp: number) => {
+    const date = new Date(timestamp);
+    return date.toLocaleString('zh-CN');
   };
 
   return (
@@ -349,6 +423,68 @@ export default function SitemapFinderClient() {
                   </div>
                 ))}
               </div>
+            </div>
+          )}
+        </div>
+
+        {/* 搜索历史 */}
+        <div className="bg-white rounded-2xl p-8 border border-gray-200 mt-8">
+          <button
+            onClick={() => setShowHistory(!showHistory)}
+            className="flex items-center justify-between w-full text-left"
+          >
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">
+              搜索历史
+            </h3>
+            <svg
+              className={`w-5 h-5 text-gray-500 transition-transform ${showHistory ? 'rotate-180' : ''}`}
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          
+          {showHistory && (
+            <div className="mt-4">
+              {searchHistory.length > 0 ? (
+                <div className="space-y-3">
+                  <div className="flex justify-end">
+                    <button
+                      onClick={clearSearchHistory}
+                      className="text-sm text-red-600 hover:text-red-800"
+                    >
+                      清除历史记录
+                    </button>
+                  </div>
+                  {searchHistory.map((item, index) => (
+                    <div
+                      key={index}
+                      className="border rounded-lg p-4 border-gray-200 bg-gray-50"
+                    >
+                      <div className="flex items-center justify-between">
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-medium text-gray-900 truncate">
+                            {item.url}
+                          </p>
+                          <p className="text-xs text-gray-500 mt-1">
+                            {formatTime(item.timestamp)} • 找到 {item.foundCount} 个网站地图
+                          </p>
+                        </div>
+                        <button
+                          onClick={() => setInputUrl(item.url)}
+                          className="text-blue-600 hover:text-blue-900 text-sm font-medium"
+                        >
+                          重新搜索
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-gray-500 text-center py-4">暂无搜索历史</p>
+              )}
             </div>
           )}
         </div>
