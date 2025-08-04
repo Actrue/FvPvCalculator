@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-
+import { domains } from '../home';
 interface DomainCheckResponse {
   domain: string;
   available: boolean;
@@ -12,15 +12,7 @@ interface FindFirstAvailableResponse {
   domain: string | null;
 }
 
-const domains = [
-  'https://z-lib.gd',
-  'https://1lib.sk',
-  'https://z-lib.fm',
-  'https://z-lib.gl',
-  'https://z-lib.fo',
-  'https://z-library.sk',
-  'https://zh.z-library.ec'
-];
+
 
 export default function ZLibraryRedirectClient() {
   const [domainStatuses, setDomainStatuses] = useState<{ domain: string; status: 'checking' | 'available' | 'unavailable' | 'error' }[]>(domains.map(domain => ({ domain, status: 'checking' })));

@@ -243,10 +243,25 @@ export default function ToolsPage() {
                 将包含中文字符的域名转换为规范的ASCII格式（Punycode）
               </p>
             </Link>
+            
+            {/* ZLibrary 镜像站 */}
+            <Link
+              href="/tool/zlibrary-mirror"
+              className="group bg-white rounded-xl p-6 border border-gray-200 hover:border-gray-300 transition-all duration-300 hover:shadow-sm"
+            >
+              <div className="w-12 h-12 bg-black rounded-lg flex items-center justify-center mb-4">
+                <img src="https://actrue.fun/favicon.ico" alt="ZLibrary 镜像站" className="w-6 h-6" />
+              </div>
+              <h3 className="text-xl font-bold text-black mb-2">
+                ZLibrary 镜像站
+              </h3>
+              <p className="text-gray-600 text-sm">
+                访问国内可稳定使用的 ZLibrary 镜像站点
+              </p>
+            </Link>
           </div>
         </div>
       </div>
     </div>
   );
 };
-

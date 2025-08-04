@@ -1,7 +1,6 @@
 import Link from 'next/link';
-
-export default function ZLibraryRedirectHome() {
-  const domains = [
+ export const domains = [
+    'https://actrue.fun',
     'https://z-lib.gd',
     'https://1lib.sk',
     'https://z-lib.fm',
@@ -10,6 +9,8 @@ export default function ZLibraryRedirectHome() {
     'https://z-library.sk',
     'https://zh.z-library.ec'
   ];
+export default function ZLibraryRedirectHome() {
+
 
   return (
     <div className="container mx-auto p-4">
