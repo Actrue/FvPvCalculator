@@ -9,12 +9,22 @@ interface MindMapNode {
   children: MindMapNode[];
 }
 
+interface SavedMindMap {
+  id: string;
+  name: string;
+  nodes: MindMapNode[];
+  createdAt: string;
+  updatedAt: string;
+}
+
 export default function MindMapEditorClient() {
   const [nodes, setNodes] = useState<MindMapNode[]>([
     { id: '1', text: '中心主题', children: [] }
   ]);
   const [isImportModalOpen, setIsImportModalOpen] = useState(false);
   const [importText, setImportText] = useState('');
+  const [isLoadModalOpen, setIsLoadModalOpen] = useState(false);
+  const [savedMindMaps, setSavedMindMaps] = useState<SavedMindMap[]>([]);
   const mindMapRef = useRef<HTMLDivElement>(null);
 
   // 添加节点
@@ -75,6 +85,95 @@ export default function MindMapEditorClient() {
       });
     };
     setNodes(updateNodeInTree(nodes));
+  };
+
+  // 保存脑图
+  const saveMindMap = () => {
+    if (nodes.length === 0) {
+      alert('无法保存空的脑图');
+      return;
+    }
+
+    // 使用第一个节点的文本作为脑图名称
+    const mindMapName = nodes[0].text || '未命名脑图';
+    
+    // 生成唯一ID
+    const id = Date.now().toString() + Math.random().toString(36).substr(2, 9);
+    
+    // 创建时间
+    const now = new Date().toISOString();
+    
+    // 创建保存的脑图对象
+    const savedMindMap: SavedMindMap = {
+      id,
+      name: mindMapName,
+      nodes: [...nodes],
+      createdAt: now,
+      updatedAt: now
+    };
+    
+    try {
+      // 从localStorage获取已保存的脑图列表
+      const savedMindMapsString = localStorage.getItem('mindMapEditorSavedMaps');
+      const savedMindMaps: SavedMindMap[] = savedMindMapsString ? JSON.parse(savedMindMapsString) : [];
+      
+      // 检查是否已存在同名脑图
+      const existingIndex = savedMindMaps.findIndex(map => map.name === mindMapName);
+      if (existingIndex !== -1) {
+        // 如果存在同名脑图，询问用户是否覆盖
+        if (confirm(`已存在名为 "${mindMapName}" 的脑图，是否覆盖？`)) {
+          savedMindMaps[existingIndex] = savedMindMap;
+        } else {
+          return;
+        }
+      } else {
+        // 添加新的脑图到列表开头
+        savedMindMaps.unshift(savedMindMap);
+      }
+      
+      // 保存到localStorage
+      localStorage.setItem('mindMapEditorSavedMaps', JSON.stringify(savedMindMaps));
+      alert(`脑图 "${mindMapName}" 保存成功`);
+    } catch (error) {
+      console.error('保存脑图失败:', error);
+      alert('保存脑图失败，请重试');
+    }
+  };
+
+  // 加载已保存的脑图列表
+  const loadSavedMindMaps = () => {
+    try {
+      const savedMindMapsString = localStorage.getItem('mindMapEditorSavedMaps');
+      const savedMindMaps: SavedMindMap[] = savedMindMapsString ? JSON.parse(savedMindMapsString) : [];
+      setSavedMindMaps(savedMindMaps);
+    } catch (error) {
+      console.error('加载已保存脑图列表失败:', error);
+      setSavedMindMaps([]);
+    }
+  };
+
+  // 加载指定的脑图
+  const loadMindMap = (savedMap: SavedMindMap) => {
+    setNodes(savedMap.nodes);
+    setIsLoadModalOpen(false);
+    alert(`脑图 "${savedMap.name}" 加载成功`);
+  };
+
+  // 删除已保存的脑图
+  const deleteSavedMindMap = (id: string, name: string) => {
+    if (confirm(`确定要删除脑图 "${name}" 吗？`)) {
+      try {
+        const savedMindMapsString = localStorage.getItem('mindMapEditorSavedMaps');
+        const savedMindMaps: SavedMindMap[] = savedMindMapsString ? JSON.parse(savedMindMapsString) : [];
+        const updatedMindMaps = savedMindMaps.filter(map => map.id !== id);
+        localStorage.setItem('mindMapEditorSavedMaps', JSON.stringify(updatedMindMaps));
+        setSavedMindMaps(updatedMindMaps);
+        alert(`脑图 "${name}" 删除成功`);
+      } catch (error) {
+        console.error('删除脑图失败:', error);
+        alert('删除脑图失败，请重试');
+      }
+    }
   };
 
   // 导出为文本格式
@@ -241,6 +340,27 @@ export default function MindMapEditorClient() {
             添加根节点
           </button>
           <button
+            onClick={saveMindMap}
+            className="bg-gradient-to-r from-green-500 to-green-600 text-white px-4 py-2 rounded-lg hover:from-green-600 hover:to-green-700 transition-all font-medium flex items-center shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
+          >
+            <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
+            </svg>
+            保存脑图
+          </button>
+          <button
+            onClick={() => {
+              loadSavedMindMaps();
+              setIsLoadModalOpen(true);
+            }}
+            className="bg-gradient-to-r from-yellow-500 to-yellow-600 text-white px-4 py-2 rounded-lg hover:from-yellow-600 hover:to-yellow-700 transition-all font-medium flex items-center shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
+          >
+            <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+            </svg>
+            加载脑图
+          </button>
+          <button
             onClick={exportAsText}
             className="bg-gradient-to-r from-purple-500 to-purple-600 text-white px-4 py-2 rounded-lg hover:from-purple-600 hover:to-purple-700 transition-all font-medium flex items-center shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
           >
@@ -367,6 +487,62 @@ export default function MindMapEditorClient() {
                   className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
                 >
                   确认导入
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* 加载脑图模态框 */}
+        {isLoadModalOpen && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+            <div className="bg-white rounded-lg shadow-xl w-full max-w-2xl max-h-[80vh] flex flex-col">
+              <div className="px-6 py-4 border-b border-gray-200">
+                <h3 className="text-lg font-medium text-gray-900">加载脑图</h3>
+              </div>
+              <div className="flex-1 overflow-auto p-6">
+                {savedMindMaps.length > 0 ? (
+                  <div className="space-y-4">
+                    {savedMindMaps.map((map) => (
+                      <div key={map.id} className="border border-gray-200 rounded-lg p-4 flex justify-between items-center hover:bg-gray-50">
+                        <div>
+                          <h4 className="font-medium text-gray-900">{map.name}</h4>
+                          <p className="text-sm text-gray-500 mt-1">
+                            创建时间: {new Date(map.createdAt).toLocaleString('zh-CN')}
+                          </p>
+                          <p className="text-sm text-gray-500">
+                            最后更新: {new Date(map.updatedAt).toLocaleString('zh-CN')}
+                          </p>
+                        </div>
+                        <div className="flex space-x-2">
+                          <button
+                            onClick={() => loadMindMap(map)}
+                            className="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors text-sm"
+                          >
+                            加载
+                          </button>
+                          <button
+                            onClick={() => deleteSavedMindMap(map.id, map.name)}
+                            className="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700 transition-colors text-sm"
+                          >
+                            删除
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="text-center py-8 text-gray-500">
+                    <p>暂无保存的脑图</p>
+                  </div>
+                )}
+              </div>
+              <div className="px-6 py-4 border-t border-gray-200 flex justify-end">
+                <button
+                  onClick={() => setIsLoadModalOpen(false)}
+                  className="px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+                >
+                  关闭
                 </button>
               </div>
             </div>
