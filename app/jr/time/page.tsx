@@ -1,21 +1,21 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import ZZCalculatorClient from './components/ZZCalculatorClient';
+import TimeCalculatorClient from './components/TimeCalculatorClient';
 
 export const metadata: Metadata = {
-  title: '终值计算器 - 金融工具 | Actrue',
-  description: '专业的终值计算器，支持复利终值计算，帮助您预测资金未来价值。适用于投资回报分析、财务规划等场景。',
-  keywords: '终值计算器, 终值计算, 资金终值, 金融计算, 投资回报, 财务规划, 复利终值',
+  title: "周数进度计算器 - 时间工具 | Actrue",
+  description: "查看当前年份周数进度与时间分布，帮助您规划年度工作和生活。显示当前周数、剩余周数和时间百分比。",
+  keywords: "周数进度, 时间规划, 年度计划, 周数计算, 时间管理, 进度跟踪, 工作规划",
   openGraph: {
-    title: '终值计算器 - 金融工具 | Actrue',
-    description: '专业的终值计算器，支持复利终值计算，帮助您预测资金未来价值。适用于投资回报分析、财务规划等场景。',
-    type: 'website',
-    locale: 'zh_CN',
-    siteName: 'Actrue',
+    title: "周数进度计算器 - 时间工具 | Actrue",
+    description: "查看当前年份周数进度与时间分布，帮助您规划年度工作和生活。显示当前周数、剩余周数和时间百分比。",
+    type: "website",
+    locale: "zh_CN",
+    siteName: "Actrue",
   },
 };
 
-export default function FutureValueCalculatorPage() {
+export default function TimeCalculatorPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* 返回首页链接 */}
@@ -34,14 +34,14 @@ export default function FutureValueCalculatorPage() {
       <div className="max-w-4xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-black mb-6">
-            终值计算器
+            周数进度计算器
           </h1>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
-            预测资金未来价值，支持复利终值计算
+            查看当前年份周数进度与时间分布
           </p>
         </div>
 
-        <ZZCalculatorClient />
+        <TimeCalculatorClient />
       </div>
     </div>
   );

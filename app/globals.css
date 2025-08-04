@@ -70,7 +70,7 @@ body {
 }
 
 .animate-fly {
-  animation: fly 3s ease-in-out forwards;
+  animation: fly 1.5s ease-in-out forwards;
 }
 
 .rainbow-text {

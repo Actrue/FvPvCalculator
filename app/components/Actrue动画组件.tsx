@@ -14,7 +14,7 @@ export default function Actrue动画组件() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowAnimation(false);
-    }, 3000); // 动画持续3秒
+    }, 1500); // 动画持续1.5秒
 
     return () => clearTimeout(timer);
   }, []);

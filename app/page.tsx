@@ -21,7 +21,7 @@ export default function HomePage() {
     <div className="min-h-screen bg-white">
       <Actrue动画组件 />
       {/* Hero区域 */}
-      <div className="relative rounded-2xl overflow-hidden w-full max-w-4xl mx-auto my-8 shadow-xl transition-all duration-300 hover:scale-[1.02]">
+      <div className="relative rounded-2xl overflow-hidden w-full max-w-4xl mx-auto shadow-xl transition-all duration-300 hover:scale-[1.02]">
         {/* Hero Image */}
         <div
           className="relative w-full h-96 bg-cover bg-center rounded-2xl"
@@ -36,17 +36,8 @@ export default function HomePage() {
             </div>
           </div>
         </div>
-        <div className="relative max-w-7xl mx-auto px-4 py-24 sm:px-6 lg:px-8">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h1 className="text-6xl font-bold text-black mb-6">
-              Actrue
-            </h1>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed mb-8">
-              专业的工具集合平台
-            </p>
-            <p className="text-lg text-gray-500 mb-12">
-              提升您的工作效率
-            </p>
           </div>
         </div>
       </div>
