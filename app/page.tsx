@@ -22,7 +22,7 @@ export default function HomePage() {
 
       {/* 主要模块区域 */}
       <div className="max-w-6xl mx-auto px-4 py-16 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <Link
             href="/tools"
             className="group relative bg-white rounded-2xl p-8 border border-gray-200 hover:border-gray-300 transition-all duration-300 hover:shadow-sm"
@@ -46,6 +46,37 @@ export default function HomePage() {
               </div>
               <div className="flex items-center text-black font-medium">
                 探索工具
+                <svg className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </div>
+            </div>
+          </Link>
+          
+          {/* 脑图编辑器模块 */}
+          <Link
+            href="/tool/mindmap-editor"
+            className="group relative bg-white rounded-2xl p-8 border border-gray-200 hover:border-gray-300 transition-all duration-300 hover:shadow-sm"
+          >
+            <div className="relative">
+              <div className="w-16 h-16 bg-black rounded-xl flex items-center justify-center mb-6">
+                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+                </svg>
+              </div>
+              <h2 className="text-3xl font-bold text-black mb-4">
+                脑图编辑器
+              </h2>
+              <p className="text-gray-600 text-lg mb-6 leading-relaxed">
+                创建和编辑思维导图，支持导出图片和文本格式，帮助您更好地组织思路
+              </p>
+              <div className="flex flex-wrap gap-2 mb-6">
+                <span className="px-3 py-1 border border-gray-300 text-gray-700 rounded-full text-sm">思维导图</span>
+                <span className="px-3 py-1 border border-gray-300 text-gray-700 rounded-full text-sm">知识整理</span>
+                <span className="px-3 py-1 border border-gray-300 text-gray-700 rounded-full text-sm">创意激发</span>
+              </div>
+              <div className="flex items-center text-black font-medium">
+                立即体验
                 <svg className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
