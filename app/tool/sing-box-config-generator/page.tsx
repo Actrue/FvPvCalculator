@@ -131,13 +131,13 @@ const CertificateSchema = z.object({
 const SingBoxConfigSchema = z.object({
   log: LogSchema.optional(),
   dns: DNSSchema.optional(),
-  ntp: z.record(z.string(), z.any()).optional(),
+  ntp: z.record(z.string(), z.unknown()).optional(),
   certificate: CertificateSchema.optional(),
   inbounds: z.array(InboundSchema).optional(),
   outbounds: z.array(OutboundSchema).optional(),
   route: RouteSchema.optional(),
-  services: z.array(z.record(z.string(), z.any())).optional(),
-  experimental: z.record(z.string(), z.any()).optional(),
+  services: z.array(z.record(z.string(), z.unknown())).optional(),
+  experimental: z.record(z.string(), z.unknown()).optional(),
 });
 
 interface ToastState {
@@ -222,7 +222,7 @@ export default function SingBoxConfigGeneratorPage() {
   // Update DNS server
   const updateDnsServer = (index: number, field: string, value: string) => {
     const newServers = [...dnsServers];
-    (newServers[index] as any)[field] = value;
+    (newServers[index] as Record<string, string>)[field] = value;
     setDnsServers(newServers);
   };
 
@@ -241,7 +241,7 @@ export default function SingBoxConfigGeneratorPage() {
   // Update DNS rule
   const updateDnsRule = (index: number, field: string, value: string) => {
     const newRules = [...dnsRules];
-    (newRules[index] as any)[field] = value;
+    (newRules[index] as Record<string, string>)[field] = value;
     setDnsRules(newRules);
   };
 
@@ -282,23 +282,23 @@ export default function SingBoxConfigGeneratorPage() {
       if (!inbound.auth) {
         inbound.auth = { type: 'password', password: '' };
       }
-      (inbound.auth as any)[authField] = value;
+      (inbound.auth as Record<string, string | number | boolean>)[authField] = value;
     } else if (field.startsWith('tls.')) {
       const tlsField = field.split('.')[1];
       // Initialize tls object if it doesn't exist
       if (!inbound.tls) {
         inbound.tls = { enabled: false, certificate_path: '', key_path: '', server_name: '' };
       }
-      (inbound.tls as any)[tlsField] = value;
+      (inbound.tls as Record<string, string | number | boolean>)[tlsField] = value;
     } else if (field.startsWith('reality.')) {
       const realityField = field.split('.')[1];
       // Initialize reality object if it doesn't exist
       if (!inbound.reality) {
         inbound.reality = { enabled: false, short_id: '', server_name: '', private_key: '' };
       }
-      (inbound.reality as any)[realityField] = value;
+      (inbound.reality as Record<string, string | number | boolean>)[realityField] = value;
     } else {
-      (inbound as any)[field] = value;
+      (inbound as unknown as Record<string, string | number | boolean>)[field] = value;
     }
     
     newInbounds[index] = inbound;
@@ -339,16 +339,16 @@ export default function SingBoxConfigGeneratorPage() {
       if (!outbound.tls) {
         outbound.tls = { enabled: false, server_name: '', insecure: false };
       }
-      (outbound.tls as any)[tlsField] = value;
+      (outbound.tls as Record<string, string | number | boolean>)[tlsField] = value;
     } else if (field.startsWith('reality.')) {
       const realityField = field.split('.')[1];
       // Initialize reality object if it doesn't exist
       if (!outbound.reality) {
         outbound.reality = { enabled: false, short_id: '', server_name: '', private_key: '' };
       }
-      (outbound.reality as any)[realityField] = value;
+      (outbound.reality as Record<string, string | number | boolean>)[realityField] = value;
     } else {
-      (outbound as any)[field] = value;
+      (outbound as unknown as Record<string, string | number | boolean>)[field] = value;
     }
     
     newOutbounds[index] = outbound;
@@ -370,7 +370,7 @@ export default function SingBoxConfigGeneratorPage() {
   // Update route rule
   const updateRouteRule = (index: number, field: string, value: string) => {
     const newRules = [...routeRules];
-    (newRules[index] as any)[field] = value;
+    (newRules[index] as Record<string, string>)[field] = value;
     setRouteRules(newRules);
   };
 
@@ -389,7 +389,7 @@ export default function SingBoxConfigGeneratorPage() {
   // Update route set
   const updateRouteSet = (index: number, field: string, value: string) => {
     const newSets = [...routeSets];
-    (newSets[index] as any)[field] = value;
+    (newSets[index] as Record<string, string>)[field] = value;
     setRouteSets(newSets);
   };
 
@@ -400,7 +400,7 @@ export default function SingBoxConfigGeneratorPage() {
       const preparedDnsServers = dnsServers
         .filter(server => server.tag && server.address)
         .map(server => {
-          const preparedServer: any = { tag: server.tag, address: server.address };
+          const preparedServer: Record<string, string> = { tag: server.tag, address: server.address };
           if (server.detour) preparedServer.detour = server.detour;
           return preparedServer;
         });
@@ -409,7 +409,7 @@ export default function SingBoxConfigGeneratorPage() {
       const preparedDnsRules = dnsRules
         .filter(rule => rule.server)
         .map(rule => {
-          const preparedRule: any = { server: rule.server };
+          const preparedRule: Record<string, string> = { server: rule.server };
           if (rule.geosite) preparedRule.geosite = rule.geosite;
           return preparedRule;
         });
@@ -418,7 +418,7 @@ export default function SingBoxConfigGeneratorPage() {
       const preparedInbounds = inbounds
         .filter(inbound => inbound.tag)
         .map(inbound => {
-          const preparedInbound: any = { type: inbound.type, tag: inbound.tag };
+          const preparedInbound: Record<string, unknown> = { type: inbound.type, tag: inbound.tag };
           
           // Add common fields if they exist
           if (inbound.listen) preparedInbound.listen = inbound.listen;
@@ -432,27 +432,27 @@ export default function SingBoxConfigGeneratorPage() {
           
           // Add auth if it exists and has a password
           if (inbound.auth && (inbound.auth.type || inbound.auth.password)) {
-            preparedInbound.auth = {};
-            if (inbound.auth.type) preparedInbound.auth.type = inbound.auth.type;
-            if (inbound.auth.password) preparedInbound.auth.password = inbound.auth.password;
+            preparedInbound.auth = {} as Record<string, unknown>;
+            if (inbound.auth.type) (preparedInbound.auth as Record<string, unknown>).type = inbound.auth.type;
+            if (inbound.auth.password) (preparedInbound.auth as Record<string, unknown>).password = inbound.auth.password;
           }
           
           // Add TLS if it exists and is enabled or has certificate paths
           if (inbound.tls && (inbound.tls.enabled || inbound.tls.certificate_path || inbound.tls.key_path || inbound.tls.server_name)) {
-            preparedInbound.tls = {};
-            if (inbound.tls.enabled !== undefined) preparedInbound.tls.enabled = inbound.tls.enabled;
-            if (inbound.tls.certificate_path) preparedInbound.tls.certificate_path = inbound.tls.certificate_path;
-            if (inbound.tls.key_path) preparedInbound.tls.key_path = inbound.tls.key_path;
-            if (inbound.tls.server_name) preparedInbound.tls.server_name = inbound.tls.server_name;
+            preparedInbound.tls = {} as Record<string, unknown>;
+            if (inbound.tls.enabled !== undefined) (preparedInbound.tls as Record<string, unknown>).enabled = inbound.tls.enabled;
+            if (inbound.tls.certificate_path) (preparedInbound.tls as Record<string, unknown>).certificate_path = inbound.tls.certificate_path;
+            if (inbound.tls.key_path) (preparedInbound.tls as Record<string, unknown>).key_path = inbound.tls.key_path;
+            if (inbound.tls.server_name) (preparedInbound.tls as Record<string, unknown>).server_name = inbound.tls.server_name;
           }
           
           // Add Reality if it exists and is enabled or has required fields
           if (inbound.reality && (inbound.reality.enabled || inbound.reality.short_id || inbound.reality.server_name || inbound.reality.private_key)) {
-            preparedInbound.reality = {};
-            if (inbound.reality.enabled !== undefined) preparedInbound.reality.enabled = inbound.reality.enabled;
-            if (inbound.reality.short_id) preparedInbound.reality.short_id = inbound.reality.short_id;
-            if (inbound.reality.server_name) preparedInbound.reality.server_name = inbound.reality.server_name;
-            if (inbound.reality.private_key) preparedInbound.reality.private_key = inbound.reality.private_key;
+            preparedInbound.reality = {} as Record<string, unknown>;
+            if (inbound.reality.enabled !== undefined) (preparedInbound.reality as Record<string, unknown>).enabled = inbound.reality.enabled;
+            if (inbound.reality.short_id) (preparedInbound.reality as Record<string, unknown>).short_id = inbound.reality.short_id;
+            if (inbound.reality.server_name) (preparedInbound.reality as Record<string, unknown>).server_name = inbound.reality.server_name;
+            if (inbound.reality.private_key) (preparedInbound.reality as Record<string, unknown>).private_key = inbound.reality.private_key;
           }
           
           return preparedInbound;
@@ -462,7 +462,7 @@ export default function SingBoxConfigGeneratorPage() {
       const preparedOutbounds = outbounds
         .filter(outbound => outbound.tag)
         .map(outbound => {
-          const preparedOutbound: any = { type: outbound.type, tag: outbound.tag };
+          const preparedOutbound: Record<string, unknown> = { type: outbound.type, tag: outbound.tag };
           
           // Add common fields if they exist
           if (outbound.server) preparedOutbound.server = outbound.server;
@@ -474,19 +474,19 @@ export default function SingBoxConfigGeneratorPage() {
           
           // Add TLS if it exists and is enabled or has server name
           if (outbound.tls && (outbound.tls.enabled !== undefined || outbound.tls.server_name || outbound.tls.insecure !== undefined)) {
-            preparedOutbound.tls = {};
-            if (outbound.tls.enabled !== undefined) preparedOutbound.tls.enabled = outbound.tls.enabled;
-            if (outbound.tls.server_name) preparedOutbound.tls.server_name = outbound.tls.server_name;
-            if (outbound.tls.insecure !== undefined) preparedOutbound.tls.insecure = outbound.tls.insecure;
+            preparedOutbound.tls = {} as Record<string, unknown>;
+            if (outbound.tls.enabled !== undefined) (preparedOutbound.tls as Record<string, unknown>).enabled = outbound.tls.enabled;
+            if (outbound.tls.server_name) (preparedOutbound.tls as Record<string, unknown>).server_name = outbound.tls.server_name;
+            if (outbound.tls.insecure !== undefined) (preparedOutbound.tls as Record<string, unknown>).insecure = outbound.tls.insecure;
           }
           
           // Add Reality if it exists and is enabled or has required fields
           if (outbound.reality && (outbound.reality.enabled !== undefined || outbound.reality.short_id || outbound.reality.server_name || outbound.reality.private_key)) {
-            preparedOutbound.reality = {};
-            if (outbound.reality.enabled !== undefined) preparedOutbound.reality.enabled = outbound.reality.enabled;
-            if (outbound.reality.short_id) preparedOutbound.reality.short_id = outbound.reality.short_id;
-            if (outbound.reality.server_name) preparedOutbound.reality.server_name = outbound.reality.server_name;
-            if (outbound.reality.private_key) preparedOutbound.reality.private_key = outbound.reality.private_key;
+            preparedOutbound.reality = {} as Record<string, unknown>;
+            if (outbound.reality.enabled !== undefined) (preparedOutbound.reality as Record<string, unknown>).enabled = outbound.reality.enabled;
+            if (outbound.reality.short_id) (preparedOutbound.reality as Record<string, unknown>).short_id = outbound.reality.short_id;
+            if (outbound.reality.server_name) (preparedOutbound.reality as Record<string, unknown>).server_name = outbound.reality.server_name;
+            if (outbound.reality.private_key) (preparedOutbound.reality as Record<string, unknown>).private_key = outbound.reality.private_key;
           }
           
           return preparedOutbound;
@@ -496,7 +496,7 @@ export default function SingBoxConfigGeneratorPage() {
       const preparedRouteRules = routeRules
         .filter(rule => rule.outbound)
         .map(rule => {
-          const preparedRule: any = { outbound: rule.outbound };
+          const preparedRule: Record<string, string> = { outbound: rule.outbound };
           if (rule.protocol) preparedRule.protocol = rule.protocol;
           if (rule.rule_set) preparedRule.rule_set = rule.rule_set;
           if (rule.network) preparedRule.network = rule.network;
@@ -507,30 +507,30 @@ export default function SingBoxConfigGeneratorPage() {
       const preparedRouteSets = routeSets
         .filter(set => set.tag && set.url)
         .map(set => {
-          const preparedSet: any = { tag: set.tag, type: set.type };
+          const preparedSet: Record<string, string> = { tag: set.tag, type: set.type };
           if (set.format) preparedSet.format = set.format;
           if (set.url) preparedSet.url = set.url;
           if (set.update_interval) preparedSet.update_interval = set.update_interval;
           return preparedSet;
         });
       
-      const newConfig: any = {};
+      const newConfig: Record<string, unknown> = {};
       
       // Add log config if any field is set
       if (logConfig.level || logConfig.timestamp !== undefined || logConfig.output) {
         newConfig.log = {};
-        if (logConfig.level) newConfig.log.level = logConfig.level;
-        if (logConfig.timestamp !== undefined) newConfig.log.timestamp = logConfig.timestamp;
-        if (logConfig.output) newConfig.log.output = logConfig.output;
+        if (logConfig.level) (newConfig.log as Record<string, string>).level = logConfig.level;
+        if (logConfig.timestamp !== undefined) (newConfig.log as Record<string, boolean>).timestamp = logConfig.timestamp;
+        if (logConfig.output) (newConfig.log as Record<string, string>).output = logConfig.output;
       }
       
       // Add DNS config if any field is set
       if (preparedDnsServers.length > 0 || preparedDnsRules.length > 0 || dnsStrategy || dnsCacheCapacity) {
         newConfig.dns = {};
-        if (preparedDnsServers.length > 0) newConfig.dns.servers = preparedDnsServers;
-        if (preparedDnsRules.length > 0) newConfig.dns.rules = preparedDnsRules;
-        if (dnsStrategy) newConfig.dns.strategy = dnsStrategy;
-        if (dnsCacheCapacity) newConfig.dns.cache_capacity = dnsCacheCapacity;
+        if (preparedDnsServers.length > 0) (newConfig.dns as Record<string, unknown>).servers = preparedDnsServers;
+        if (preparedDnsRules.length > 0) (newConfig.dns as Record<string, unknown>).rules = preparedDnsRules;
+        if (dnsStrategy) (newConfig.dns as Record<string, string>).strategy = dnsStrategy;
+        if (dnsCacheCapacity) (newConfig.dns as Record<string, number>).cache_capacity = dnsCacheCapacity;
       }
       
       // Add inbounds
@@ -546,10 +546,10 @@ export default function SingBoxConfigGeneratorPage() {
       // Add route config if any field is set
       if (preparedRouteRules.length > 0 || preparedRouteSets.length > 0 || routeFinal || routeAutoDetect !== undefined) {
         newConfig.route = {};
-        if (preparedRouteRules.length > 0) newConfig.route.rules = preparedRouteRules;
-        if (preparedRouteSets.length > 0) newConfig.route.rule_set = preparedRouteSets;
-        if (routeFinal) newConfig.route.final = routeFinal;
-        if (routeAutoDetect !== undefined) newConfig.route.auto_detect_interface = routeAutoDetect;
+        if (preparedRouteRules.length > 0) (newConfig.route as Record<string, unknown>).rules = preparedRouteRules;
+        if (preparedRouteSets.length > 0) (newConfig.route as Record<string, unknown>).rule_set = preparedRouteSets;
+        if (routeFinal) (newConfig.route as Record<string, string>).final = routeFinal;
+        if (routeAutoDetect !== undefined) (newConfig.route as Record<string, boolean>).auto_detect_interface = routeAutoDetect;
       }
 
       // Validate with Zod
@@ -662,7 +662,7 @@ export default function SingBoxConfigGeneratorPage() {
                     </label>
                     <select
                       value={logConfig.level}
-                      onChange={(e) => setLogConfig({...logConfig, level: e.target.value as any})}
+                      onChange={(e) => setLogConfig({...logConfig, level: e.target.value as "debug" | "info" | "warn" | "error" | ""})}
                       className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     >
                       <option value="debug">Debug</option>

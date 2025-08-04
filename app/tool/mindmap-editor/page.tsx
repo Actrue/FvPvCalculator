@@ -298,7 +298,7 @@ export default function MindMapEditorPage() {
                 </li>
                 <li className="flex items-start">
                   <span className="inline-block w-6 h-6 bg-blue-100 text-blue-800 rounded-full text-xs flex items-center justify-center text-center leading-none mr-2 mt-0 flex-shrink-0">4</span>
-                  <span>点击 "×" 按钮删除节点（包括根节点）</span>
+                  <span>点击 "&times;" 按钮删除节点（包括根节点）</span>
                 </li>
                 <li className="flex items-start">
                   <span className="inline-block w-6 h-6 bg-blue-100 text-blue-800 rounded-full text-xs flex items-center justify-center text-center leading-none mr-2 mt-0 flex-shrink-0">5</span>

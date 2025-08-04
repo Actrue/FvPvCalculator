@@ -11,6 +11,9 @@ export const metadata: Metadata = {
   keywords: "工具, 计算器, 金融工具, 实用工具, 在线工具, 编程, 开发",
   authors: [{ name: "Actrue" }],
   themeColor: "#1e293b",
+  icons: {
+    icon: "/icons8-a-96.png",
+  },
   openGraph: {
     title: "Actrue - 工具平台",
     description: "Actrue是一个集成了实用工具的现代化平台，提供金融计算器、生活实用工具等在线工具。",
